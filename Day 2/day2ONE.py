@@ -30,6 +30,3 @@ for line in lines:
 
 print("Number of good passwords: {}".format(numGoodPasswords))
 
-
-# policies = lines.split(":")
-# print(lines)
