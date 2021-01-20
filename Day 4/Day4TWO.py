@@ -8,10 +8,54 @@ def validatePassport(keys, values):
         # print(requiredKey)
         try:
             keyIndex = keys.index(requiredKey)
-            print("{}: {} index: {}".format(requiredKey,values[keyIndex], keyIndex))
+            # print("{}: {} index: {}".format(requiredKey,values[keyIndex], keyIndex))
         except ValueError:
             valid = False
-    
+    try:
+        keyIndex = keys.index("byr")
+        value = values[keyIndex]
+        valid = validatebyr(value)
+        if not valid:
+            raise ValueError
+
+        keyIndex = keys.index("iyr")
+        value = values[keyIndex]
+        valid = validateiyr(value)
+        if not valid:
+            raise ValueError
+        
+        keyIndex = keys.index("eyr")
+        value = values[keyIndex]
+        valid = validateeyr(value)
+        if not valid:
+            raise ValueError
+        
+        keyIndex = keys.index("hgt")
+        value = values[keyIndex]
+        valid = validatehgt(value)
+        if not valid:
+            raise ValueError
+        
+        keyIndex = keys.index("hcl")
+        value = values[keyIndex]
+        valid = validatehcl(value)
+        if not valid:
+            raise ValueError
+        
+        keyIndex = keys.index("ecl")
+        value = values[keyIndex]
+        valid = validateecl(value)
+        if not valid:
+            raise ValueError
+        
+        keyIndex = keys.index("pid")
+        value = values[keyIndex]
+        valid = validatepid(value)
+        if not valid:
+            raise ValueError
+
+    except ValueError:
+            valid = False
     return valid
 
 def validatebyr(value):
@@ -19,9 +63,10 @@ def validatebyr(value):
     try:
         value = int(value)
         if value < 1920 or value > 2002:
-            valid = False
+            raise ValueError
     except ValueError:
         valid = False
+        print("Invalid byr: {}".format(value))
 
     return valid
 
@@ -30,9 +75,10 @@ def validateiyr(value):
     try:
         value = int(value)
         if value < 2010 or value > 2020:
-            valid = False
+            raise ValueError
     except ValueError:
         valid = False
+        print("Invalid iyr: {}".format(value))
 
     return valid
 
@@ -41,9 +87,10 @@ def validateeyr(value):
     try:
         value = int(value)
         if value < 2020 or value > 2030:
-            valid = False
+            raise ValueError
     except ValueError:
         valid = False
+        print("Invalid eyr: {}".format(value))
 
     return valid
 
@@ -55,12 +102,13 @@ def validatehgt(value):
         if unit != "cm" and unit != "in":
             raise ValueError
         number = int(number)
-        if unit == "cm" and number < 150 or number > 193:
-            valid = False
-        if unit == "in" and number < 59 or number > 76:
-            valid = False
+        if unit == "cm" and (number < 150 or number > 193):
+            raise ValueError
+        if unit == "in" and (number < 59 or number > 76):
+            raise ValueError
     except ValueError:
         valid = False
+        print("Invalid hgt: {}".format(value))
 
     return valid
 
@@ -78,17 +126,16 @@ def validatehcl(value):
                 raise ValueError
     except ValueError:
         valid = False
+        print("Invalid hcl: {}".format(value))
     
     return valid
-
-with open("input.txt", "r") as fReader:
-    lines = fReader.read().split("\n\n")
 
 def validateecl(value):
     valid = True
     validEyeColors = {"amb", "blu", "brn", "gry", "grn", "hzl", "oth"}
     if value not in validEyeColors:
         valid = False
+        print("Invalid ecl: {}".format(value))
     
     return valid
 
@@ -97,13 +144,16 @@ def validatepid(value):
 
     try:
         if len(value) != 9:
-            valid = False
+            raise ValueError
         value = int(value)
     except ValueError:
         valid = False
-
+        print("Invalid pid: {}".format(value))
     return valid
 
+
+with open("input.txt", "r") as fReader:
+    lines = fReader.read().split("\n\n")
 validPassports = 0
 
 for i, line in enumerate(lines):
@@ -122,21 +172,22 @@ for i, line in enumerate(lines):
     # print(keys)
     if validatePassport(keys, values):
         validPassports += 1
+        print("Valid passport: {}\n".format(line))
 print("valid passports: " + str(validPassports) )
 # print(lines)
 
-value = "2022"
-print("byr {} is {}".format(value, validatebyr(value)))
-print("iyr {} is {}".format(value, validateiyr(value)))
-print("eyr {} is {}".format(value, validateeyr(value)))
-height = "77in"
-print("hgt {} is {}".format(height, validatehgt(height)))
+# value = "2022"
+# print("byr {} is {}".format(value, validatebyr(value)))
+# print("iyr {} is {}".format(value, validateiyr(value)))
+# print("eyr {} is {}".format(value, validateeyr(value)))
+# height = "77in"
+# print("hgt {} is {}".format(height, validatehgt(height)))
 
-haircolor = "#43cdea"
-print("hcl {} is {}".format(haircolor, validatehcl(haircolor)))
+# haircolor = "#43cdea"
+# print("hcl {} is {}".format(haircolor, validatehcl(haircolor)))
 
-eyecolor = "grn"
-print("ecl {} is {}".format(eyecolor, validateecl(eyecolor)))
+# eyecolor = "grn"
+# print("ecl {} is {}".format(eyecolor, validateecl(eyecolor)))
 
-passportID = "245532345"
-print("pid {} is {}".format(passportID, validatepid(passportID)))
+# passportID = "245532345"
+# print("pid {} is {}".format(passportID, validatepid(passportID)))
