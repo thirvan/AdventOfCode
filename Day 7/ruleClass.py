@@ -1,4 +1,4 @@
-class Rule:
+class Bag:
 
     def __init__(self, line) -> None:
         temp = line.split(" bags contain ")
@@ -6,6 +6,7 @@ class Rule:
         self.contents = dict()
         print("BAG: " + self.bag)
 
+    def 
         for content in temp[1].split(", "):
             #remove "bag", "bags" and "."
             content = content.replace(" bag", "")
@@ -16,19 +17,9 @@ class Rule:
             print("NUM: {} BAG: {}".format(numBag, typeBag))
             print(content, end = "\n")
 
-        print("CONTENTS: ")
-        print(self.contents)
+        # print("CONTENTS: ")
+        # print(self.contents)
         print("...")
-
-
-
-        # self.bag = temp[0]
-        # contents = dict()
-        # for content in temp[1].split(", "):
-        #     contents[content.split(" ")[1]] = content.split(" ")[0]
-        # # contents[content] = contents[contents][:-1]
-        # self.contents = contents    
-        # print(type(self.contents))
 
     def __str__(self) -> str:
         string = self.bag
@@ -36,4 +27,3 @@ class Rule:
             string += "|" + content
 
         return string
-
