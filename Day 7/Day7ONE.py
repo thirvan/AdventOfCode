@@ -1,5 +1,10 @@
 with open("input.txt") as fReader:
-    rules = fReader.read().split("\n")
+    lines = fReader.read().split("\n")
 
-for rule in rules:
+for line in lines:
+    rule = []
+    print(line)
+    temp = line.split(" bags contain ")
+    rule.append(temp[0])
+    rule.extend(temp[1].split(", "))
     print(rule)
