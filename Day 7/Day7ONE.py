@@ -1,11 +1,11 @@
-from ruleClass import Rule
+from ruleClass import Bag
 
-with open("input.txt") as fReader:
+with open("testinput.txt") as fReader:
     lines = fReader.read().split("\n")
 
 # rules = []
 for line in lines:
-    rule = Rule(line)
+    rule = Bag(line)
     # print(rule  )
     
     
